@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    private static final String[] URLS = { "http://localhost:3000", "http://localhost:3001" };
-    private static final int REQUESTS = 100;
+    private static final String[] URLS = { "http://localhost:3000" };
+    private static final int REQUESTS = 1000;
 
     public static void main(String args[]) throws InterruptedException, ExecutionException {
         long init = System.currentTimeMillis();

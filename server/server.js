@@ -1,21 +1,18 @@
 const http = require('http');
 
-let a = 0, b = 0;
-
-const response = (res, msg) => {
-    res.writeHead(200);
-    res.write(msg);
-    res.end();
-};
+let a = 0;
 
 http.createServer((req, res) => {
-    a++;
     console.log(`Request ${a} in localhost:3000`)
-    response(res, `http://localhot:3000 -> ${a}`);
-}).listen(3000);
+    
+    a++;
+    let value = Math.random() * (10 - 1) + 1;
 
-http.createServer((req, res) => {
-    b++;
-    console.log(`Request ${b} in localhost:3001`)
-    response(res, `http://localhot:3001 -> ${b}`);
-}).listen(3001);
+    for (let i = 0; i < 100; i++) {
+        value = value + Math.sqrt(Math.sqrt(value + (a * Math.pow(i, 2))));
+    }
+
+    res.writeHead(200);
+    res.write(`http://localhot:3000 (${a}) -> ${value}`);
+    res.end();
+}).listen(3000);

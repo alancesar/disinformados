@@ -1,6 +1,6 @@
 const http = require('http');
-const urls = ['http://localhost:3000', 'http://localhost:3001'];
-const requests = 100;
+const urls = ['http://localhost:3000'];
+const requests = 1000;
 
 const ping = (url) => {
     return new Promise((resolve) => {

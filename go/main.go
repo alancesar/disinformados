@@ -14,12 +14,9 @@ type HTTPResponse struct {
 	err      error
 }
 
-const requests = 100
+const requests = 1000
 
-var urls = []string{
-	"http://localhost:3000",
-	"http://localhost:3001",
-}
+var urls = []string{"http://localhost:3000"}
 
 func main() {
 	init := time.Now().UnixNano() / int64(time.Millisecond)
@@ -68,6 +65,7 @@ func asyncHTTPRequest(requests int, urls []string) []*HTTPResponse {
 
 func ping(url string, channel chan *HTTPResponse) {
 	fmt.Println("Fazendo requisição em", url)
-	response, err := http.Get(url)
+	client := http.Client{}
+	response, err := client.Get(url)
 	channel <- &HTTPResponse{url, response, err}
 }
