@@ -2,16 +2,24 @@
   "name": "apresentacao-go",
   "version": "1.0.0",
   "description": "",
-  "main": "server_1.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js",
+    "demo": "node node/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alancesar/disinformados.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alancesar/disinformados/issues"
+  },
+  "homepage": "https://github.com/alancesar/disinformados#readme",
   "dependencies": {
-    "bluebird": "^3.5.1",
     "request": "^2.83.0",
     "request-promise": "^4.2.2"
   }
