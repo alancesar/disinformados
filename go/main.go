@@ -7,9 +7,6 @@ import (
 	"time"
 )
 
-// TODO
-// Compreender o porquê de passar o ponteiro do struct ao invés de sua referência
-
 // HTTPResponse Resposta HTTP
 type HTTPResponse struct {
 	url      string
