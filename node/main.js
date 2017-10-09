@@ -1,11 +1,18 @@
-const rp = require('request-promise')
-
+const http = require('http');
 const urls = ['http://localhost:3000', 'http://localhost:3001'];
 const requests = 100;
 
 const ping = (url) => {
-    console.log(`Fazendo requisição em ${url}`);
-    return rp(url).then(response => response);
+    return new Promise((resolve) => {
+        console.log(`Fazendo requisição em ${url}`);
+        
+        let data = '';
+
+        http.get(url, (response) => {
+            response.on('data', chunk => data += chunk);
+            response.on('end', () => resolve(data));
+        });
+    });
 };
 
 const main = () => {
