@@ -2,16 +2,13 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"time"
 )
 
-var urls = []string{
-	"http://www.google.com",
-	"http://www.facebook.com",
-}
-
-const totalRequests = 10
+// TODO
+// Compreender o porquê de passar o ponteiro do struct ao invés de sua referência
 
 // HTTPResponse Resposta HTTP
 type HTTPResponse struct {
@@ -20,52 +17,60 @@ type HTTPResponse struct {
 	err      error
 }
 
+const requests = 100
+
+var urls = []string{
+	"http://localhost:3000",
+	"http://localhost:3001",
+}
+
 func main() {
-	results := asyncHTTPRequest(urls)
+	init := time.Now().UnixNano() / int64(time.Millisecond)
+	results := asyncHTTPRequest(requests, urls)
+
 	for _, result := range results {
 		if result != nil && result.response != nil {
-			if result.response.StatusCode == http.StatusOK {
-				fmt.Println(result.url, "deu bom")
-			} else {
-				fmt.Println(result.url, "deu ruim")
+			if result.err == nil && result.response.StatusCode == http.StatusOK {
+				bytes, _ := ioutil.ReadAll(result.response.Body)
+				fmt.Println(string(bytes))
+			}
+		}
+	}
+
+	end := time.Now().UnixNano() / int64(time.Millisecond)
+	fmt.Println("Tempo total ->", (end - init), "milissegundos")
+}
+
+func asyncHTTPRequest(requests int, urls []string) []*HTTPResponse {
+	channel := make(chan *HTTPResponse)
+	responses := []*HTTPResponse{}
+	totalRequests := len(urls) * requests
+
+	for i := 0; i < requests; i++ {
+		for _, url := range urls {
+			go ping(url, channel)
+		}
+	}
+
+	for {
+		select {
+		case response := <-channel:
+			if response.err != nil {
+				fmt.Println("Falha na requisição de", response.url)
+				fmt.Println(response.err)
+			}
+
+			responses = append(responses, response)
+
+			if len(responses) == totalRequests {
+				return responses
 			}
 		}
 	}
 }
 
-func asyncHTTPRequest(urls []string) []*HTTPResponse {
-	ch := make(chan *HTTPResponse)
-	responses := []*HTTPResponse{}
-	httpClient := http.Client{}
-
-	for _, url := range urls {
-		go func(url string) {
-			fmt.Println("Fazendo requisição em", url)
-			response, err := httpClient.Get(url)
-			ch <- &HTTPResponse{url, response, err}
-
-			if err != nil && response != nil && response.StatusCode == http.StatusOK {
-				response.Body.Close()
-			}
-		}(url)
-	}
-
-	for {
-		select {
-		case r := <-ch:
-			if r.err != nil {
-				fmt.Println("Falha na requisição de", r.url)
-			}
-
-			responses = append(responses, r)
-
-			if len(responses) == len(urls) {
-				fmt.Println()
-				return responses
-			}
-
-		case <-time.After(50 * time.Millisecond):
-			fmt.Printf(".")
-		}
-	}
+func ping(url string, channel chan *HTTPResponse) {
+	fmt.Println("Fazendo requisição em", url)
+	response, err := http.Get(url)
+	channel <- &HTTPResponse{url, response, err}
 }
