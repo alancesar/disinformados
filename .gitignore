@@ -1,8 +1,10 @@
 node_modules/
 target/
-.settings/
 .DS_Store
 .idea
+.settings/
+*.class
+*.classpath
 *.iml
-.classpath
-.project
+*.log
+*.project
