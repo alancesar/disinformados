@@ -21,7 +21,7 @@ go run main.go
 ```
 
 ## teste-carga
-Faz um teste de carga em um servidor HTTP.  
+Executa um teste de carga em um servidor HTTP.  
 
 **Configurar limite de requets do SO**
 ```sh
