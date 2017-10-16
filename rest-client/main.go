@@ -14,7 +14,7 @@ func main() {
 	var endereco models.Endereco
 	endereco = models.Endereco{}
 
-	bytes := get("13086902")
+	bytes, _ := get("13086902")
 
 	json.Unmarshal(bytes, &endereco)
 
@@ -32,7 +32,7 @@ func main() {
 //     "ibge": "3509502",
 //     "gia": "2446"
 // }
-func get(cep string) []byte {
+func get(cep string) (bytes []byte, err error) {
 	url := "https://viacep.com.br/ws/" + cep + "/json/"
 	response, err := http.Get(url)
 
@@ -42,6 +42,6 @@ func get(cep string) []byte {
 
 	defer response.Body.Close()
 
-	bytes, _ := ioutil.ReadAll(response.Body)
-	return bytes
+	bytes, err = ioutil.ReadAll(response.Body)
+	return
 }
