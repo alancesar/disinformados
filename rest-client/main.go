@@ -21,6 +21,17 @@ func main() {
 	utils.Printer(&endereco)
 }
 
+// {
+//     "cep": "13086-902",
+//     "logradouro": "Rua Doutor Ricardo Benetton Martins",
+//     "complemento": "s/n",
+//     "bairro": "Polo II de Alta Tecnologia (Campinas)",
+//     "localidade": "Campinas",
+//     "uf": "SP",
+//     "unidade": "",
+//     "ibge": "3509502",
+//     "gia": "2446"
+// }
 func get(cep string) []byte {
 	url := "https://viacep.com.br/ws/" + cep + "/json/"
 	response, err := http.Get(url)
