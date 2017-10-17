@@ -35,7 +35,7 @@ go run main.go
 ```
 
 ## rest-client
-Executa uma chamada a um serviço REST e converte a resposta de `JSON` para uma `Stuct`
+Executa uma chamada a um serviço REST e converte a resposta de `JSON` para uma `Struct`
 
 ```sh
 go run main.go
