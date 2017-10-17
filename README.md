@@ -1,8 +1,22 @@
 # DISinformados
 Códigos utilizados na apresentação "Go em 15 minutos"
 
+## concorrencia-async
+Executa GoRoutines de forma assíncrona
+
+```sh
+go run main.go
+```
+
+## concorrencia-sync
+Executa GoRoutines sincronizadas, utilizando canais
+
+```sh
+go run main.go
+```
+
 ## processamento-paralelo
-Lê um arquivo de texto contendo 1000 valores numéricos e executa cálculos utilizando processamento paralelo.  
+Lê um arquivo de texto contendo 1000 valores numéricos e executa cálculos utilizando processamento paralelo.
 
 **Java**
 ```sh
@@ -20,8 +34,15 @@ node main.js
 go run main.go
 ```
 
+## rest-client
+Executa uma chamada a um serviço REST e converte a resposta de `JSON` para uma `Stuct`
+
+```sh
+go run main.go
+```
+
 ## teste-carga
-Executa um teste de carga em um servidor HTTP.  
+Executa um teste de carga em um servidor HTTP.
 
 **Configurar limite de requets do SO**
 ```sh
@@ -37,3 +58,12 @@ node server.js
 ```sh
 go run main.go
 ```
+
+## web-server
+Instancia um servidor Web.
+
+```sh
+go run main.go
+```
+
+Para acessar, abra o endereço `http://localhost:8080` em seu navegador
