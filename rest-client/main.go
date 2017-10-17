@@ -16,6 +16,9 @@ func main() {
 
 	bytes, _ := get("13086902")
 
+	fmt.Println("JSON:\n", string(bytes))
+	fmt.Println("-------------------------------------------------")
+
 	json.Unmarshal(bytes, &endereco)
 
 	utils.Printer(&endereco)
@@ -34,6 +37,7 @@ func main() {
 // }
 func get(cep string) (bytes []byte, err error) {
 	url := "https://viacep.com.br/ws/" + cep + "/json/"
+	// url := "http://localhost:3000"
 	response, err := http.Get(url)
 
 	if err != nil {
