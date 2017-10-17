@@ -71,5 +71,10 @@ func ping(url string, channel chan *HTTPResponse) {
 	fmt.Println("Fazendo requisição em", url)
 	client := http.Client{}
 	response, err := client.Get(url)
+
+	if response != nil {
+		defer response.Body.Close()
+	}
+
 	channel <- &HTTPResponse{url, response, err}
 }
